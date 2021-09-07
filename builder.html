@@ -12,19 +12,42 @@
         <input id="Todoist-Auth-Key" type="text" class="row-input" placeholder="Please Enter Todoist Auth"></input>
       </div>
       <button id="saveLocalCredentials" class="settings-button" >Save Credentials</button>
+      <button id="GetProject" class="add-row-button" >Get Project</button>
+      
       <button id="addRow" class="add-row-button" onclick="addRowInput('')">Add Row</button>
       <div id="rows"></div>
       <button id="submit" class="build-button">Build template</button>
+      <div id="projectResults" class="row"></div>
     </div>
     <script src="https://miro.com/app/static/sdk.1.1.js"></script>
     <script src="src/builder.js"></script>
     <script>
       const LS_KEY = 'todoist-plugin-widget-info'
+      const TODOIST_PROJECT_ENDOPINT = 'https://api.todoist.com/sync/v8/projects/get_data'
 
       //Settings Menu
       document.getElementById('loadLocalCredentials').addEventListener('click', () => loadLocalCreds())
       document.getElementById('saveLocalCredentials').addEventListener('click', () => saveLocalCreds())
+      document.getElementById('GetProject').addEventListener('click', () => getTodoistProject())
       
+      function getTodoistProject()
+      {
+        const xhttp = new XMLHttpRequest();
+        xhttp.onload = function() {
+          document.getElementById("projectResults").innerHTML = this.responseText;
+        }
+        xhttp.open("POST", TODOIST_PROJECT_ENDOPINT);
+        xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+        xhttp.setRequestHeader("Authorization", "Bearer 089333937092f88ab1e2fa4c4c1448b60ccb2e83");
+        // xhttp.setRequestHeader("Access-Control-Allow-Origin", "*");
+        // xhttp.setRequestHeader("Access-Control-Allow-Headers", "Accept");
+        // xhttp.setRequestHeader("Access-Control-Allow-Methods", "PUT, POST, OPTIONS");
+        xhttp.setRequestHeader("Access-Control-Allow-Credentials", "true");
+        // xhttp.setRequestHeader("Access-Control-Allow-Headers", "Special-Request-Header");
+        
+        xhttp.send("{ 'project_id': '2272713050' }");
+      }
+
       function loadLocalCreds() {
         savedAuth = getData()
         document.getElementById('Todoist-Auth-Key').value = savedAuth
