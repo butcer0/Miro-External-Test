@@ -19,7 +19,7 @@
     <script>
       //Settings Menu
       const settingsRowsContainer = document.getElementById('settingsRows')
-      addSettingRowInput('Please Enter Todoist Auth Key', true)
+      addSettingRowInput('Please Enter Todoist Auth Key')
       document.getElementById('saveSettingsLocal').addEventListener('click', () => drawTemplate(persistSettingsToLocal()))
       
       function loadLocalCreds() {
@@ -47,17 +47,26 @@
         return data[index_id] || ''
       }
 
-      function addSettingRowInput(value, readOnly = false) {
+      function addSettingRowInput(value) {
         const settingRow = document.createElement('div')
         settingRow.classList.add('row')
-        settingsRowsContainer.appendChild(settingRow)
+        settingsRowsContainer.appendChild(row)
 
         //create input
-        const input = document.createElement('input')
-        input.type = 'text'
-        input.classList.add('row-input')
-        input.value = value
-        settingRow.appendChild(input)
+        const sInput = document.createElement('input')
+        sInput.type = 'text'
+        sInput.classList.add('row-input')
+        sInput.value = value
+        settingRow.appendChild(sInput)
+
+        //create delete button
+        const button = document.createElement('button')
+        button.textContent = 'Delete'
+        button.classList.add('delete-button')
+        button.addEventListener('click', () => {
+          settingRow.remove()
+        })
+        settingRow.appendChild(button)
       }
 
       //Normal Menu
