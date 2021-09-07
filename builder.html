@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title></title>
+    <link rel="stylesheet" href="src/styles.css" />
+  </head>
+
+  <body>
+    <div class="scrollable-container">
+      <button id="loadLocalCredentials" class="settings-button" onclick="loadLocalCreds('')">Add Row</button>
+      <div id="settingsRows"></div>
+      <button id="saveLocalCredentials" class="settings-button">Build template</button>
+      <button id="addRow" class="add-row-button" onclick="saveLocalCreds('')">Add Row</button>
+      <div id="rows"></div>
+      <button id="submit" class="build-button">Build template</button>
+    </div>
+    <script src="https://miro.com/app/static/sdk.1.1.js"></script>
+    <script src="src/builder.js"></script>
+    <script>
+      //Settings Menu
+      const settingsRowsContainer = document.getElementById('settingsRows')
+      addSettingRowInput('Please Enter Todoist Auth Key', true)
+      document.getElementById('saveSettingsLocal').addEventListener('click', () => drawTemplate(persistSettingsToLocal()))
+      
+      function loadLocalCreds() {
+        savedAuth = getData()
+        document.getElementById('Todoist-Auth-Key').value = savedAuth
+      }
+
+      function saveLocalCreds() {
+        let authKey = document.getElementById('Todoist-Auth-Key').value
+        saveData(authKey)
+        alert('Credentials Saved!')
+      }
+
+      const LS_KEY = 'todoist-plugin-widget-info'
+
+      function saveData(text) {
+        let data = JSON.parse(localStorage.getItem(LS_KEY)) || {}
+        localStorage.setItem(LS_KEY, JSON.stringify(data))
+      }
+
+      function getData() {
+        //remove after testing
+        let index_id = 1
+        let data = JSON.parse(localStorage.getItem(LS_KEY)) || {}
+        return data[index_id] || ''
+      }
+
+      function addSettingRowInput(value, readOnly = false) {
+        const settingRow = document.createElement('div')
+        settingRow.classList.add('row')
+        settingsRowsContainer.appendChild(settingRow)
+
+        //create input
+        const input = document.createElement('input')
+        input.type = 'text'
+        input.classList.add('row-input')
+        input.value = value
+        row.appendChild(input)
+      }
+
+      //Normal Menu
+      const rowsContainer = document.getElementById('rows')
+
+      addRowInput('FRONT-END')
+      addRowInput('BACK-END')
+      addRowInput('DESIGN')
+      addRowInput('MARKETING')
+
+      document.getElementById('submit').addEventListener('click', () => drawTemplate(getLabels()))
+
+      function addRowInput(value, readOnly = false) {
+        const row = document.createElement('div')
+        row.classList.add('row')
+        rowsContainer.appendChild(row)
+
+        //create input
+        const input = document.createElement('input')
+        input.type = 'text'
+        input.classList.add('row-input')
+        input.value = value
+        row.appendChild(input)
+
+        //create delete button
+        const button = document.createElement('button')
+        button.textContent = 'Delete'
+        button.classList.add('delete-button')
+        button.addEventListener('click', () => {
+        row.remove()
+        })
+        row.appendChild(button)
+      }
+
+      function getLabels() {
+        return Array.from(rowsContainer.querySelectorAll('input')).map((el) => el.value)
+      }
+    </script>
+  </body>
+</html>
