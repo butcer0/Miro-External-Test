@@ -23,25 +23,25 @@
       document.getElementById('saveSettingsLocal').addEventListener('click', () => drawTemplate(persistSettingsToLocal()))
       
       function loadLocalCreds() {
-        const LS_KEY = 'todoist-plugin-widget-info'
         savedAuth = getData()
         document.getElementById('Todoist-Auth-Key').value = savedAuth
       }
 
       function saveLocalCreds() {
-        const LS_KEY = 'todoist-plugin-widget-info'
         let authKey = document.getElementById('Todoist-Auth-Key').value
         saveData(authKey)
         alert('Credentials Saved!')
       }
 
       function saveData(text) {
+        const LS_KEY = 'todoist-plugin-widget-info'
         let data = JSON.parse(localStorage.getItem(LS_KEY)) || {}
         localStorage.setItem(LS_KEY, JSON.stringify(data))
       }
 
       function getData() {
         //remove after testing
+        const LS_KEY = 'todoist-plugin-widget-info'
         let index_id = 1
         let data = JSON.parse(localStorage.getItem(LS_KEY)) || {}
         return data[index_id] || ''
