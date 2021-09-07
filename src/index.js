@@ -11,7 +11,7 @@ function run() {
         toolbarSvgIcon: icon24,
         librarySvgIcon: icon48,
         onClick: () => {
-          miro.board.ui.openLibrary('https://butcer0.github.io/Miro-External-Test/builder.html', {title: 'External Integration Test'})
+          miro.board.ui.openLibrary('/Miro-External-Test/builder.html', {title: 'External Integration Test'})
         },
       },
     },
