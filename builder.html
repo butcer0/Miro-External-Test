@@ -7,9 +7,11 @@
 
   <body>
     <div class="scrollable-container">
-      <button id="loadLocalCredentials" class="settings-button" onclick="loadLocalCreds('')">Load Credentials</button>
-      <div id="settingsRows"></div>
-      <button id="saveLocalCredentials" class="settings-button"onclick="saveLocalCreds('')">Save Credentials</button>
+      <button id="loadLocalCredentials" class="settings-button" >Load Credentials</button>
+      <div class="row" >
+        <input id="Todoist-Auth-Key" type="text" class="row-input" placeholder="Please Enter Todoist Auth"></input>
+      </div>
+      <button id="saveLocalCredentials" class="settings-button" >Save Credentials</button>
       <button id="addRow" class="add-row-button" onclick="addRowInput('')">Add Row</button>
       <div id="rows"></div>
       <button id="submit" class="build-button">Build template</button>
@@ -17,9 +19,9 @@
     <script src="https://miro.com/app/static/sdk.1.1.js"></script>
     <script src="src/builder.js"></script>
     <script>
+      const LS_KEY = 'todoist-plugin-widget-info'
+
       //Settings Menu
-      const settingsRowsContainer = document.getElementById('settingsRows')
-      addSettingRowInput('Please Enter Todoist Auth Key')
       document.getElementById('loadLocalCredentials').addEventListener('click', () => loadLocalCreds())
       document.getElementById('saveLocalCredentials').addEventListener('click', () => saveLocalCreds())
       
@@ -36,39 +38,13 @@
 
       function saveData(text) {
         const LS_KEY = 'todoist-plugin-widget-info'
-        let data = JSON.parse(localStorage.getItem(LS_KEY)) || {}
-        localStorage.setItem(LS_KEY, JSON.stringify({0: text}))
+        let data = localStorage.getItem(LS_KEY) || {}
+        localStorage.setItem(LS_KEY, text)
       }
 
       function getData() {
-        //remove after testing
-        const LS_KEY = 'todoist-plugin-widget-info'
-        let index_id = 0
-        let data = JSON.parse(localStorage.getItem(LS_KEY)) || {}
-        return data[index_id] || ''
-      }
-
-      function addSettingRowInput(value) {
-        const settingRow = document.createElement('div')
-        settingRow.classList.add('row')
-        settingRow.id = 'Todoist-Auth-Key';
-        settingsRowsContainer.appendChild(settingRow)
-
-        //create input
-        const sInput = document.createElement('input')
-        sInput.type = 'text'
-        sInput.classList.add('row-input')
-        sInput.value = value
-        settingRow.appendChild(sInput)
-
-        //create delete button
-        const button = document.createElement('button')
-        button.textContent = 'Delete'
-        button.classList.add('delete-button')
-        button.addEventListener('click', () => {
-          settingRow.remove()
-        })
-        settingRow.appendChild(button)
+        let data = localStorage.getItem(LS_KEY) || {}
+        return data || ''
       }
 
       //Normal Menu
