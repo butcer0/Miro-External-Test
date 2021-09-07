@@ -36,14 +36,14 @@
 
       function saveData(text) {
         const LS_KEY = 'todoist-plugin-widget-info'
-        let data = localStorage.getItem(LS_KEY) || {}
-        localStorage.setItem(LS_KEY, text)
+        let data = JSON.parse(localStorage.getItem(LS_KEY)) || {}
+        localStorage.setItem(LS_KEY, JSON.stringify({0: text}))
       }
 
       function getData() {
         //remove after testing
         const LS_KEY = 'todoist-plugin-widget-info'
-        let index_id = 1
+        let index_id = 0
         let data = JSON.parse(localStorage.getItem(LS_KEY)) || {}
         return data[index_id] || ''
       }
