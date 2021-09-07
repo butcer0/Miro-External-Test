@@ -7,10 +7,10 @@
 
   <body>
     <div class="scrollable-container">
-      <button id="loadLocalCredentials" class="settings-button" onclick="loadLocalCreds('')">Add Row</button>
       <div id="settingsRows"></div>
+      <button id="loadLocalCredentials" class="settings-button" onclick="loadLocalCreds('')">Load Credentials</button>
       <button id="saveLocalCredentials" class="settings-button">Build template</button>
-      <button id="addRow" class="add-row-button" onclick="saveLocalCreds('')">Add Row</button>
+      <button id="addRow" class="add-row-button" onclick="saveLocalCreds('')">Save Credentials</button>
       <div id="rows"></div>
       <button id="submit" class="build-button">Build template</button>
     </div>
@@ -18,6 +18,7 @@
     <script src="src/builder.js"></script>
     <script>
       //Settings Menu
+      const LS_KEY = 'todoist-plugin-widget-info'
       const settingsRowsContainer = document.getElementById('settingsRows')
       addSettingRowInput('Please Enter Todoist Auth Key')
       document.getElementById('saveSettingsLocal').addEventListener('click', () => drawTemplate(persistSettingsToLocal()))
@@ -32,8 +33,6 @@
         saveData(authKey)
         alert('Credentials Saved!')
       }
-
-      const LS_KEY = 'todoist-plugin-widget-info'
 
       function saveData(text) {
         let data = JSON.parse(localStorage.getItem(LS_KEY)) || {}
