@@ -20,7 +20,7 @@
       //Settings Menu
       const settingsRowsContainer = document.getElementById('settingsRows')
       addSettingRowInput('Please Enter Todoist Auth Key')
-      document.getElementById('saveSettingsLocal').addEventListener('click', () => drawTemplate(persistSettingsToLocal()))
+      document.getElementById('saveSettingsLocal').addEventListener('click', () => persistSettingsToLocal())
       
       function loadLocalCreds() {
         savedAuth = getData()
